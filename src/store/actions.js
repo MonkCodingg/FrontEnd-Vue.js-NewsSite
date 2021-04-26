@@ -12,6 +12,7 @@ export default {
                 //console.log(response.data);
                 context.commit('SET_NEWS', response.data);
                 //state.news = response.data;
+                return response;
             }) 
             .catch(error => {
                 console.log(error);
