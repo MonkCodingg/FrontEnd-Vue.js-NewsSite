@@ -21,8 +21,13 @@ export const router = new VueRouter({
       path: '/news',
       name: 'news',
       // component: url 주소로 갔을 때 표시됨 컴포넌트
-      component:NewsView,
       //component: createListView('NewsView'),
+      component:NewsView,
+      beforeEnter: (to, from, next) => {
+        console.log('to', to);
+        console.log('from', from);
+        console.log(next);
+      },
     },
     {
       path: '/ask',
