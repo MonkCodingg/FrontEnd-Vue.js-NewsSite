@@ -5,6 +5,9 @@ import AskView from '../views/AskView.vue';
 import JobsView from '../views/JobsView.vue';
 import UserView from '../views/UserView.vue';
 import ItemView from '../views/ItemView.vue';
+import bus from '../utils/bus.js';
+import { store } from '../store/index.js';
+
 //import createListView from '../views/CreateListView.js';
 
 Vue.use(VueRouter);// Vue.use를 통해 명시적으로 라우터 추가
@@ -24,9 +27,16 @@ export const router = new VueRouter({
       //component: createListView('NewsView'),
       component:NewsView,
       beforeEnter: (to, from, next) => {
-        console.log('to', to);
-        console.log('from', from);
-        console.log(next);
+        bus.$emit('start:spinner');
+        store.dispatch('FETCH_LIST', to.name)
+          .then(() => {
+            console.log('fetched');
+            bus.$emit('end:spinner');
+            next();
+          })
+          .catch((error) => {
+            console.log("error");
+          });
       },
     },
     {
